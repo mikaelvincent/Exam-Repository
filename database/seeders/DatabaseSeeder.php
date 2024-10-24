@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -10,15 +9,21 @@ class DatabaseSeeder extends Seeder
     /**
      * Seed the application's database.
      *
+     * This method calls individual seeders in the correct order to maintain data integrity.
+     *
      * @return void
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        // Order is important to maintain foreign key constraints
+        $this->call([
+            UserSeeder::class,
+            ExamSetSeeder::class,
+            QuestionSeeder::class,
+            AnswerSeeder::class,
+            ExplanationSeeder::class,
+            UserProgressSeeder::class,
+            HttpRequestSeeder::class,
+        ]);
     }
 }
