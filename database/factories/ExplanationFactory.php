@@ -15,10 +15,7 @@ class ExplanationFactory extends Factory
     public function definition()
     {
         return [
-            'question_id' => Question::factory(),
             'content' => $this->faker->paragraph(),
-            'created_at' => now(),
-            'updated_at' => now(),
         ];
     }
 }

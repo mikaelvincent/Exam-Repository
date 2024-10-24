@@ -20,8 +20,6 @@ class HttpRequestFactory extends Factory
             'user_id' => User::factory(),
             'http_method' => $this->faker->randomElement($httpMethods),
             'path' => $this->faker->url(),
-            'created_at' => now(),
-            'updated_at' => now(),
         ];
     }
 }

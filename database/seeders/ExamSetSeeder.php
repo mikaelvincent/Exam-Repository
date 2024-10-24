@@ -24,14 +24,25 @@ class ExamSetSeeder extends Seeder
     /**
      * Run the database seeds.
      *
-     * Creates a hierarchical structure of ExamSets.
+     * Creates multiple root ExamSets and their hierarchical structures.
      *
      * @return void
      */
     public function run()
     {
-        // Start by creating top-level ExamSets
-        $this->createExamSets(null, 1);
+        // Determine number of top-level ExamSets
+        $rootExamSetCount = random_int(2, 5);
+
+        for ($i = 0; $i < $rootExamSetCount; $i++) {
+            // Create a top-level ExamSet
+            $examSet = ExamSet::factory()->create([
+                'parent_id' => null,
+                // 'is_exam' is set by the factory
+            ]);
+
+            // Recursively create child ExamSets
+            $this->createExamSets($examSet->id, 2);
+        }
     }
 
     /**
