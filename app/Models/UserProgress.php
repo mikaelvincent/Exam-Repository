@@ -9,20 +9,8 @@ class UserProgress extends Model
 {
     use HasFactory;
 
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
-    public $timestamps = true;
+    protected $table = 'user_progresses';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * Allows mass assignment of these fields during model creation.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'user_id',
         'answer_id',
@@ -30,7 +18,7 @@ class UserProgress extends Model
     ];
 
     /**
-     * Get the user that owns the progress.
+     * Get the user associated with the progress.
      */
     public function user()
     {
