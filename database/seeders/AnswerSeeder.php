@@ -11,24 +11,32 @@ class AnswerSeeder extends Seeder
     /**
      * Run the database seeds.
      *
-     * This seeder creates a random number of answers (0-4) for each question.
+     * This seeder creates a random number (0-4) of unique answers for each question,
+     * ensuring that each answer label ('A', 'B', 'C', 'D') is unique per question.
      *
      * @return void
      */
     public function run()
     {
+        // Define possible labels
+        $labels = ['A', 'B', 'C', 'D'];
+
         // Fetch all questions
         $questions = Question::all();
 
         foreach ($questions as $question) {
-            // Create between 0 and 4 answers randomly for each question
-            $answerCount = random_int(0, 4);
+            // Create between 1 and 4 unique answers for each question
+            $answerCount = random_int(1, count($labels));
             
-            if ($answerCount > 0) {
+            // Shuffle labels and take the required number
+            $assignedLabels = collect($labels)->shuffle()->take($answerCount)->toArray();
+
+            foreach ($assignedLabels as $label) {
                 Answer::factory()
-                    ->count($answerCount)
                     ->for($question)
-                    ->create();
+                    ->create([
+                        'label' => $label,
+                    ]);
             }
         }
     }
