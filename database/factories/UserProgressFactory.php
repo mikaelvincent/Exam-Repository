@@ -17,8 +17,6 @@ class UserProgressFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => User::factory(),
-            'answer_id' => Answer::factory(),
             'is_active' => $this->faker->boolean(80), // 80% chance to be active
             'created_at' => now(),
             'updated_at' => now(),

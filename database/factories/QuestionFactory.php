@@ -15,7 +15,6 @@ class QuestionFactory extends Factory
     public function definition()
     {
         return [
-            'exam_set_id' => ExamSet::factory()->state(['is_exam' => true]),
             'name' => $this->faker->sentence(),
             'slug' => $this->faker->unique()->slug(),
             'content' => $this->faker->paragraph(),

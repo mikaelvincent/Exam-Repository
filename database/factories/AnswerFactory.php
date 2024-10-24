@@ -15,7 +15,6 @@ class AnswerFactory extends Factory
     public function definition()
     {
         return [
-            'question_id' => Question::factory(),
             'label' => strtoupper($this->faker->randomElement(['A', 'B', 'C', 'D'])),
             'content' => $this->faker->sentence(),
             'image_src' => $this->faker->optional()->imageUrl(),
