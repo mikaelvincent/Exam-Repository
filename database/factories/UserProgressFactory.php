@@ -30,7 +30,7 @@ class UserProgressFactory extends Factory
      */
     public function configure()
     {
-        return $this->afterMaking(function (UserProgress $userProgress) {
+        return $this->afterCreating(function (UserProgress $userProgress) {
             if ($userProgress->is_active) {
                 // Ensure no duplicate answer_id for the same user when is_active is true
                 $existing = UserProgress::where('user_id', $userProgress->user_id)
@@ -41,6 +41,7 @@ class UserProgressFactory extends Factory
                 if ($existing) {
                     // Assign a new answer_id to avoid duplication from existing answers
                     $userProgress->answer_id = Answer::inRandomOrder()->value('id') ?: Answer::factory()->create()->id;
+                    $userProgress->save();
                 }
             }
         });
