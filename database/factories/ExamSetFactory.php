@@ -15,7 +15,9 @@ class ExamSetFactory extends Factory
     public function definition()
     {
         return [
-            'parent_id' => $this->faker->optional()->for(ExamSet::factory()->state(['is_exam' => false])),
+            'parent_id' => $this->faker->optional()->state(function () {
+                return ExamSet::factory()->state(['is_exam' => false])->create()->id;
+            }),
             'name' => $this->faker->words(3, true),
             'slug' => $this->faker->unique()->slug(),
             'is_exam' => $this->faker->boolean(50),
