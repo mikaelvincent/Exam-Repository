@@ -16,8 +16,6 @@ class ExplanationFactory extends Factory
     {
         return [
             'content' => $this->faker->paragraph(),
-            'created_at' => now(),
-            'updated_at' => now(),
         ];
     }
 }

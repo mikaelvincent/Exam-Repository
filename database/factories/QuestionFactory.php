@@ -29,8 +29,6 @@ class QuestionFactory extends Factory
             'content' => $this->faker->paragraph(),
             'image_src' => $this->faker->optional()->imageUrl(),
             'image_alt' => $this->faker->optional()->words(3, true),
-            'created_at' => now(),
-            'updated_at' => now(),
         ];
     }
 

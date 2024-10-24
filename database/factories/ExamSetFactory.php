@@ -29,8 +29,6 @@ class ExamSetFactory extends Factory
             'is_exam' => $this->faker->boolean(50),
             'children_sort_by' => 'id',
             'children_sort_order' => 'ASC',
-            'created_at' => now(),
-            'updated_at' => now(),
         ];
     }
 

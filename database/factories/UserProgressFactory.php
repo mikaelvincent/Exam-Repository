@@ -18,8 +18,6 @@ class UserProgressFactory extends Factory
         return [
             'answer_id' => Answer::inRandomOrder()->value('id') ?: Answer::factory()->create()->id,
             'is_active' => $this->faker->boolean(80), // 80% chance to be active
-            'created_at' => now(),
-            'updated_at' => now(),
         ];
     }
 

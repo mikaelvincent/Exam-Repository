@@ -27,8 +27,6 @@ class UserFactory extends Factory
     {
         return [
             'uuid' => (string) Str::uuid(),
-            'created_at' => now(),
-            'updated_at' => now(),
         ];
     }
 
@@ -64,7 +62,6 @@ class UserFactory extends Factory
             'email_verified_at' => null,
             'password' => null,
             'remember_token' => null,
-            // 'uuid' remains as defined in the default state
         ]);
     }
 }
