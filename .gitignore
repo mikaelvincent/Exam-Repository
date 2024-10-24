@@ -16,3 +16,10 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+# Mapper
+.map
+.mapomit
+.mapignore
+.mapheader
+.mapfooter
