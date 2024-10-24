@@ -11,30 +11,60 @@ use Illuminate\Support\Str;
 class UserFactory extends Factory
 {
     /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = \App\Models\User::class;
+
+    /**
      * Define the model's default state.
+     * By default, create an unregistered user with a UUID.
      *
      * @return array<string, mixed>
      */
     public function definition()
     {
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
+            'uuid' => (string) Str::uuid(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 
     /**
-     * Indicate that the model's email address should be unverified.
+     * Indicate that the user is registered.
+     * Registered users do not have a uuid.
      *
      * @return static
      */
-    public function unverified()
+    public function registered()
     {
         return $this->state(fn (array $attributes) => [
+            'uuid' => null,
+            'name' => $this->faker->name(),
+            'email' => $this->faker->unique()->safeEmail(),
+            'email_verified_at' => now(),
+            'password' => bcrypt('password'),
+            'remember_token' => Str::random(10),
+        ]);
+    }
+
+    /**
+     * Indicate that the user is unregistered.
+     * Unregistered users have a UUID.
+     *
+     * @return static
+     */
+    public function unregistered()
+    {
+        return $this->state(fn (array $attributes) => [
+            'name' => null,
+            'email' => null,
             'email_verified_at' => null,
+            'password' => null,
+            'remember_token' => null,
+            // 'uuid' remains as defined in the default state
         ]);
     }
 }
