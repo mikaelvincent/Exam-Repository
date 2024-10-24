@@ -3,24 +3,29 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
 
     /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = true;
+
+    /**
      * The attributes that are mass assignable.
      *
-     * For unregistered users, only 'uuid' is required.
-     * For registered users, additional fields are filled.
+     * For registered users, these include name, email, and password.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'uuid',
         'name',
         'email',
         'password',
@@ -29,30 +34,18 @@ class User extends Authenticatable
     /**
      * The attributes that should be hidden for arrays.
      *
-     * Hides sensitive fields like 'password' and 'remember_token'.
+     * Hides sensitive information from array or JSON representations.
      *
      * @var array<int, string>
      */
     protected $hidden = [
         'password',
         'remember_token',
+        'email_verified_at',
     ];
 
     /**
-     * The attributes that should be cast.
-     *
-     * Casts 'email_verified_at' to datetime.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
-    /**
-     * Get the user progresses for the user.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * Get the user progresses associated with the user.
      */
     public function userProgresses()
     {
@@ -60,22 +53,10 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the HTTP requests for the user.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * Get the HTTP requests made by the user.
      */
     public function httpRequests()
     {
         return $this->hasMany(HttpRequest::class);
-    }
-
-    /**
-     * Determine if the user is registered.
-     *
-     * @return bool
-     */
-    public function isRegistered()
-    {
-        return !is_null($this->email);
     }
 }

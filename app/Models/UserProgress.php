@@ -10,16 +10,16 @@ class UserProgress extends Model
     use HasFactory;
 
     /**
-     * The table associated with the model.
+     * Indicates if the model should be timestamped.
      *
-     * Since the table name follows Laravel's naming conventions, this is optional.
-     *
-     * @var string
+     * @var bool
      */
-    protected $table = 'user_progresses';
+    public $timestamps = true;
 
     /**
      * The attributes that are mass assignable.
+     *
+     * Allows mass assignment of these fields during model creation.
      *
      * @var array<int, string>
      */
@@ -30,18 +30,7 @@ class UserProgress extends Model
     ];
 
     /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'is_active' => 'boolean',
-    ];
-
-    /**
      * Get the user that owns the progress.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
     {
@@ -49,9 +38,7 @@ class UserProgress extends Model
     }
 
     /**
-     * Get the answer that this progress is related to.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Get the answer associated with the progress.
      */
     public function answer()
     {

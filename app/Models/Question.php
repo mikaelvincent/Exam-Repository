@@ -10,7 +10,16 @@ class Question extends Model
     use HasFactory;
 
     /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = true;
+
+    /**
      * The attributes that are mass assignable.
+     *
+     * Defines fillable attributes for mass assignment.
      *
      * @var array<int, string>
      */
@@ -24,9 +33,7 @@ class Question extends Model
     ];
 
     /**
-     * Get the exam set that owns the question.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Get the exam set that the question belongs to.
      */
     public function examSet()
     {
@@ -35,8 +42,6 @@ class Question extends Model
 
     /**
      * Get the answers for the question.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function answers()
     {
@@ -45,8 +50,6 @@ class Question extends Model
 
     /**
      * Get the explanations for the question.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function explanations()
     {

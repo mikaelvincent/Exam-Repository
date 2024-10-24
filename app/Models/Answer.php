@@ -10,7 +10,16 @@ class Answer extends Model
     use HasFactory;
 
     /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = true;
+
+    /**
      * The attributes that are mass assignable.
+     *
+     * Allows these attributes to be mass assigned.
      *
      * @var array<int, string>
      */
@@ -24,18 +33,7 @@ class Answer extends Model
     ];
 
     /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'is_correct' => 'boolean',
-    ];
-
-    /**
-     * Get the question that owns the answer.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Get the question that the answer belongs to.
      */
     public function question()
     {
@@ -43,9 +41,7 @@ class Answer extends Model
     }
 
     /**
-     * Get the user progresses for the answer.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * Get the user progresses associated with the answer.
      */
     public function userProgresses()
     {

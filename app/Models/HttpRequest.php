@@ -10,16 +10,16 @@ class HttpRequest extends Model
     use HasFactory;
 
     /**
-     * The table associated with the model.
+     * Indicates if the model should be timestamped.
      *
-     * Since the table name follows Laravel's naming conventions, this is optional.
-     *
-     * @var string
+     * @var bool
      */
-    protected $table = 'http_requests';
+    public $timestamps = true;
 
     /**
      * The attributes that are mass assignable.
+     *
+     * Specifies which attributes can be mass assigned.
      *
      * @var array<int, string>
      */
@@ -30,19 +30,7 @@ class HttpRequest extends Model
     ];
 
     /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
-
-    /**
-     * Get the user that owns the HTTP request.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Get the user that made the HTTP request.
      */
     public function user()
     {

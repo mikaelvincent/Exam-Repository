@@ -10,7 +10,16 @@ class ExamSet extends Model
     use HasFactory;
 
     /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = true;
+
+    /**
      * The attributes that are mass assignable.
+     *
+     * Specifies which fields can be mass assigned.
      *
      * @var array<int, string>
      */
@@ -24,18 +33,7 @@ class ExamSet extends Model
     ];
 
     /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'is_exam' => 'boolean',
-    ];
-
-    /**
      * Get the parent exam set.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function parent()
     {
@@ -44,8 +42,6 @@ class ExamSet extends Model
 
     /**
      * Get the child exam sets.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function children()
     {
@@ -53,9 +49,7 @@ class ExamSet extends Model
     }
 
     /**
-     * Get the questions for the exam set.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * Get the questions associated with the exam set.
      */
     public function questions()
     {

@@ -10,7 +10,16 @@ class Explanation extends Model
     use HasFactory;
 
     /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = true;
+
+    /**
      * The attributes that are mass assignable.
+     *
+     * Allows mass assignment of specified attributes.
      *
      * @var array<int, string>
      */
@@ -20,9 +29,7 @@ class Explanation extends Model
     ];
 
     /**
-     * Get the question that owns the explanation.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Get the question that the explanation belongs to.
      */
     public function question()
     {
