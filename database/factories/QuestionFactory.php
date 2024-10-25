@@ -29,6 +29,8 @@ class QuestionFactory extends Factory
             'content' => $this->faker->paragraph(),
             'image_src' => $this->faker->optional()->imageUrl(),
             'image_alt' => $this->faker->optional()->words(3, true),
+            'answers_sort_by' => $this->faker->randomElement(['id', 'label', 'content', 'created_at', 'updated_at']),
+            'answers_sort_order' => $this->faker->randomElement(['ASC', 'DESC', 'RAND']),
         ];
     }
 
