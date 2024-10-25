@@ -30,7 +30,7 @@ class GuestUserMiddleware
 
             if ($user) {
                 // Reset the cookie expiry
-                Cookie::queue('guest_uuid', $uuid, 60 * 24 * 365 * 10); // 10 years
+                Cookie::queue('guest_uuid', $uuid, 576000); // 400 days
             } else {
                 // UUID not found, create a new guest user
                 Log::warning('Guest UUID not found in database: ' . $uuid);
@@ -57,8 +57,8 @@ class GuestUserMiddleware
         $uuid = (string) Str::uuid();
         $user = User::create(['uuid' => $uuid]);
 
-        // Store UUID in a cookie with a 10-year expiry
-        Cookie::queue('guest_uuid', $uuid, 60 * 24 * 365 * 10); // 10 years
+        // Store UUID in a cookie
+        Cookie::queue('guest_uuid', $uuid, 576000); // 400 days
 
         // Log the creation of a new guest user
         Log::info('Created new guest user with UUID: ' . $uuid);
