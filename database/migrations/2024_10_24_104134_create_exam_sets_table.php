@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug');
             $table->boolean('is_exam')->default(false);
-            $table->string('children_sort_by', 64)->default('id');
-            $table->string('children_sort_order', 4)->default('ASC');
+            $table->enum('children_sort_by', ['id', 'name', 'slug', 'created_at', 'updated_at'])->default('id');
+            $table->enum('children_sort_order', ['ASC', 'DESC'])->default('ASC');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate()->useCurrent();
 
