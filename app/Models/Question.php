@@ -30,6 +30,8 @@ class Question extends Model
         'content',
         'image_src',
         'image_alt',
+        'answers_sort_by',
+        'answers_sort_order',
     ];
 
     /**
