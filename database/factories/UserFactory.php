@@ -19,7 +19,7 @@ class UserFactory extends Factory
 
     /**
      * Define the model's default state.
-     * By default, create an unregistered user with a UUID.
+     * By default, create a guest user with a UUID.
      *
      * @return array<string, mixed>
      */
@@ -32,7 +32,7 @@ class UserFactory extends Factory
 
     /**
      * Indicate that the user is registered.
-     * Registered users do not have a uuid.
+     * Registered users do not have a UUID.
      *
      * @return static
      */
@@ -49,12 +49,12 @@ class UserFactory extends Factory
     }
 
     /**
-     * Indicate that the user is unregistered.
-     * Unregistered users have a UUID.
+     * Indicate that the user is a guest.
+     * Guest users have a UUID.
      *
      * @return static
      */
-    public function unregistered()
+    public function guest()
     {
         return $this->state(fn (array $attributes) => [
             'name' => null,
