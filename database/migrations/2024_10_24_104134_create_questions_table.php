@@ -21,6 +21,8 @@ return new class extends Migration
             $table->text('content')->nullable();
             $table->string('image_src')->nullable();
             $table->string('image_alt')->nullable();
+            $table->enum('answers_sort_by', ['id', 'label', 'content', 'created_at', 'updated_at'])->default('id');
+            $table->enum('answers_sort_order', ['ASC', 'DESC', 'RAND'])->default('ASC');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate()->useCurrent();
 
