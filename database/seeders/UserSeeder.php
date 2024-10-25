@@ -10,7 +10,7 @@ class UserSeeder extends Seeder
     /**
      * Run the database seeds.
      *
-     * This seeder creates both registered and unregistered users.
+     * This seeder creates both registered and guest users.
      *
      * @return void
      */
@@ -22,9 +22,9 @@ class UserSeeder extends Seeder
             ->count(10)
             ->create();
 
-        // Create 20 unregistered users
+        // Create 20 guest users
         User::factory()
-            ->unregistered()
+            ->guest()
             ->count(20)
             ->create();
     }
