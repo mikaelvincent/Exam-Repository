@@ -13,6 +13,19 @@ class ExamSetFactory extends Factory
 {
     protected $model = \App\Models\ExamSet::class;
 
+    /**
+     * Available options for sorting.
+     *
+     * @var array
+     */
+    protected $sortByOptions = ['id', 'name', 'slug', 'created_at', 'updated_at'];
+    protected $sortOrderOptions = ['ASC', 'DESC'];
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
     public function definition()
     {
         $name = $this->faker->words(3, true);
@@ -27,8 +40,8 @@ class ExamSetFactory extends Factory
             'name' => $name,
             'slug' => $slug,
             'is_exam' => $this->faker->boolean(50),
-            'children_sort_by' => 'id',
-            'children_sort_order' => 'ASC',
+            'children_sort_by' => $this->faker->randomElement($this->sortByOptions),
+            'children_sort_order' => $this->faker->randomElement($this->sortOrderOptions),
         ];
     }
 
