@@ -23,8 +23,6 @@ return new class extends Migration
             $table->boolean('is_correct')->default(false);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate()->useCurrent();
-
-            $table->unique(['label', 'question_id'], 'unique_label_per_question');
         });
     }
 
