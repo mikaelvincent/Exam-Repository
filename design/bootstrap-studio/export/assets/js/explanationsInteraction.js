@@ -1,5 +1,3 @@
-// File: assets/js/explanationNavigation.js
-
 document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('explanations');
     const prevButton = document.getElementById('prev-explanation');
