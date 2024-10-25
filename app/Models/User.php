@@ -22,10 +22,12 @@ class User extends Authenticatable implements MustVerifyEmail
      * The attributes that are mass assignable.
      *
      * For registered users, these include name, email, and password.
+     * For guest users, includes UUID.
      *
      * @var array<int, string>
      */
     protected $fillable = [
+        'uuid',
         'name',
         'email',
         'password',
