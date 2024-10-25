@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\ExamSet;
+use App\Models\Question;
 use Illuminate\Support\Str;
 
 /**
@@ -31,8 +32,10 @@ class ExamSetFactory extends Factory
         $name = $this->faker->words(3, true);
         $slug = Str::slug($name);
 
-        // Ensure the slug is unique for the same parent_id
+        // Determine parent ID
         $parentId = $this->faker->optional()->randomElement(ExamSet::pluck('id')->toArray());
+
+        // Ensure the slug is unique among both exam sets and questions with the same parent
         $slug = $this->uniqueSlugForParent($slug, $parentId);
 
         return [
@@ -46,7 +49,7 @@ class ExamSetFactory extends Factory
     }
 
     /**
-     * Generate a unique slug for the specified parent_id.
+     * Generate a unique slug among both exam sets and questions for the specified parent ID.
      *
      * @param string $slug
      * @param int|null $parentId
@@ -57,7 +60,10 @@ class ExamSetFactory extends Factory
         $originalSlug = $slug;
         $counter = 1;
 
-        while (ExamSet::where('slug', $slug)->where('parent_id', $parentId)->exists()) {
+        while (
+            ExamSet::where('slug', $slug)->where('parent_id', $parentId)->exists() ||
+            Question::where('slug', $slug)->where('exam_set_id', $parentId)->exists()
+        ) {
             $slug = $originalSlug . '-' . $counter++;
         }
 
