@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Question;
+use App\Models\ExamSet;
 use Illuminate\Support\Str;
 
 /**
@@ -18,9 +19,11 @@ class QuestionFactory extends Factory
         $name = $this->faker->sentence();
         $slug = Str::slug($name);
 
-        // Ensure the slug is unique for the same exam_set_id
-        $examSetId = $this->faker->randomElement(\App\Models\ExamSet::pluck('id')->toArray());
-        $slug = $this->uniqueSlugForExamSet($slug, $examSetId);
+        // Determine exam set ID
+        $examSetId = $this->faker->randomElement(ExamSet::pluck('id')->toArray());
+
+        // Ensure the slug is unique among both exam sets and questions with the same parent
+        $slug = $this->uniqueSlugForParent($slug, $examSetId);
 
         return [
             'exam_set_id' => $examSetId,
@@ -35,18 +38,21 @@ class QuestionFactory extends Factory
     }
 
     /**
-     * Generate a unique slug for the specified exam_set_id.
+     * Generate a unique slug among both exam sets and questions for the specified parent ID.
      *
      * @param string $slug
-     * @param int $examSetId
+     * @param int $parentId
      * @return string
      */
-    protected function uniqueSlugForExamSet($slug, $examSetId)
+    protected function uniqueSlugForParent($slug, $parentId)
     {
         $originalSlug = $slug;
         $counter = 1;
 
-        while (Question::where('slug', $slug)->where('exam_set_id', $examSetId)->exists()) {
+        while (
+            Question::where('slug', $slug)->where('exam_set_id', $parentId)->exists() ||
+            ExamSet::where('slug', $slug)->where('parent_id', $parentId)->exists()
+        ) {
             $slug = $originalSlug . '-' . $counter++;
         }
 
