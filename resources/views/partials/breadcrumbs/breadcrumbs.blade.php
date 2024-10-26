@@ -1,6 +1,9 @@
 @if (empty($breadcrumbs))
     @php
-        $breadcrumbs = [['name' => 'Home', 'url' => '/']];
+        $breadcrumbs = [
+            ['name' => 'Home', 'url' => '/'],
+            ['name' => 'Error', 'url' => null]
+        ];
     @endphp
 @endif
 <nav>
