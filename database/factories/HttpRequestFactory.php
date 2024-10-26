@@ -19,7 +19,7 @@ class HttpRequestFactory extends Factory
         return [
             'user_id' => User::factory(),
             'http_method' => $this->faker->randomElement($httpMethods),
-            'path' => $this->faker->url(),
+            'path' => $this->faker->slug() . '/' . $this->faker->slug(),
         ];
     }
 }
