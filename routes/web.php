@@ -8,7 +8,12 @@ Route::get('/', function () {
 });
 
 Route::get('/contributors', function () {
-    return view('contributors');
+    $breadcrumbs = [
+        ['name' => 'Home', 'url' => '/'],
+        ['name' => 'Contributors', 'url' => null],
+    ];
+
+    return view('pages.contributors', compact('breadcrumbs'));
 });
 
 Route::get('/{any}', [ContentResolverController::class, 'resolve'])
