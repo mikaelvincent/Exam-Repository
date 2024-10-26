@@ -26,7 +26,10 @@ class ContentResolverService
                 ->first();
 
             if ($examSet) {
-                $breadcrumbs[] = ['name' => $examSet->name, 'url' => $this->buildUrl($segments, $index + 1)];
+                $breadcrumbs[] = [
+                    'name' => $examSet->name,
+                    'url' => $this->buildUrl($segments, $index + 1)
+                ];
                 $currentParentId = $examSet->id;
                 continue;
             }
@@ -36,11 +39,23 @@ class ContentResolverService
                 ->first();
 
             if ($question) {
-                $breadcrumbs[] = ['name' => $question->name, 'url' => null];
-                break;
+                $breadcrumbs[] = [
+                    'name' => $question->name,
+                    'url' => $this->buildUrl($segments, $index + 1)
+                ];
+                
+                // Exit early if it's the last segment, or continue if no other segments
+                if ($index === count($segments) - 1) {
+                    break;
+                }
+                
+                // If not the last segment, reset question and continue processing
+                $question = null;
+                continue;
             }
-
-            // If neither ExamSet nor Question is found, stop processing
+            
+            // If no match is found, specify error and exit loop
+            $breadcrumbs[] = ['name' => 'Error', 'url' => null];
             break;
         }
 
