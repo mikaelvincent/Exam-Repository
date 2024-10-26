@@ -53,7 +53,7 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * Ensures that the $breadcrumbs variable is passed to error views.
+     * Appends 'Error' to breadcrumbs and passes them to error views.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Throwable  $exception
@@ -65,8 +65,14 @@ class Handler extends ExceptionHandler
             $status = $exception->getStatusCode();
 
             if (View::exists("errors.{$status}")) {
+                // Retrieve existing breadcrumbs from the request with a fallback
+                $breadcrumbs = $request->get('breadcrumbs', [
+                    ['name' => 'Home', 'url' => '/'],
+                    ['name' => 'Error', 'url' => null],
+                ]);
+
                 return response()->view("errors.{$status}", [
-                    'breadcrumbs' => [],
+                    'breadcrumbs' => $breadcrumbs,
                 ], $status);
             }
         }
