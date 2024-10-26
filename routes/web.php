@@ -18,7 +18,7 @@ Route::get('/contributors', function () {
 });
 
 Route::middleware('content.resolution')->group(function () {
-    Route::get('/{examSetSlug1}/{examSetSlug2?}/{examSetSlug3?}/{examSetSlug4?}/{questionSlug?}', function () {
+    Route::get('/{any?}', function () {
         $examSet = request()->get('examSet');
         $question = request()->get('question');
         $breadcrumbs = request()->get('breadcrumbs');
@@ -31,6 +31,8 @@ Route::middleware('content.resolution')->group(function () {
             return view('exam_set', compact('examSet', 'breadcrumbs'));
         }
 
-        return abort(404, 'Content not found');
+        return response()->view('errors.404', [
+            'breadcrumbs' => $breadcrumbs,
+        ], 404);
     })->where('any', '.*');
 });
