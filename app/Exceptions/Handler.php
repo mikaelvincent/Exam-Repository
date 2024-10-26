@@ -4,6 +4,8 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 
 class Handler extends ExceptionHandler
 {
@@ -46,5 +48,35 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    /**
+     * Render an exception into an HTTP response.
+     *
+     * Appends 'Error' to breadcrumbs and passes them to error views.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Throwable  $exception
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function render($request, Throwable $exception)
+    {
+        if ($this->isHttpException($exception)) {
+            $status = $exception->getStatusCode();
+
+            if (View::exists("errors.{$status}")) {
+                // Retrieve existing breadcrumbs from the request with a fallback
+                $breadcrumbs = $request->get('breadcrumbs', [
+                    ['name' => 'Home', 'url' => '/'],
+                    ['name' => 'Error', 'url' => null],
+                ]);
+
+                return response()->view("errors.{$status}", [
+                    'breadcrumbs' => $breadcrumbs,
+                ], $status);
+            }
+        }
+
+        return parent::render($request, $exception);
     }
 }
